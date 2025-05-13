@@ -138,7 +138,7 @@ const LandingPage = () => {
         {showRegister && (
           <Register showLoginHandler={showLoginHandler} />
         )}
-        {showFirm && showLogOut && <AddFirm />}
+        {showFirm && <AddFirm />}
         {showProduct && showLogOut && <AddProduct />}
         {showWelcome && <Welcome />}
         {showAllProducts && showLogOut && <AllProducts />}
