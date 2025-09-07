@@ -2,7 +2,7 @@ import React,{use, useState} from 'react'
 import { API_URL } from '../../data/ApiPath';
 
 
-export const Login = ({showWelcomeHandler, onFirmResolved}) => {
+export const Login = ({showWelcomeHandler, onFirmDataUpdate}) => {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
 
@@ -40,13 +40,21 @@ export const Login = ({showWelcomeHandler, onFirmResolved}) => {
                             localStorage.setItem('firmId', vendorFirmId);
                             localStorage.setItem('firmName', vendorFirmName);
                             console.log("Firm data loaded:", { vendorFirmId, vendorFirmName });
-                            if (onFirmResolved) onFirmResolved(vendorFirmName, vendorFirmId);
+                            
+                            // Notify parent component about firm data
+                            if(onFirmDataUpdate) {
+                                onFirmDataUpdate(vendorFirmName, vendorFirmId);
+                            }
                         } else {
                             console.log("Vendor has no firm associated");
                             // Clear any existing firm data
                             localStorage.removeItem('firmId');
                             localStorage.removeItem('firmName');
-                            if (onFirmResolved) onFirmResolved('', '');
+                            
+                            // Notify parent component about no firm data
+                            if(onFirmDataUpdate) {
+                                onFirmDataUpdate('', '');
+                            }
                         }
                         showWelcomeHandler();
                     } else {

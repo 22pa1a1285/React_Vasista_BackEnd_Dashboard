@@ -11,6 +11,36 @@ const UserDetails = () => {
     fetchUserDetails();
   }, []);
 
+  // Also check localStorage for firm data as fallback
+  useEffect(() => {
+    const storedFirmName = localStorage.getItem('firmName');
+    const storedFirmId = localStorage.getItem('firmId');
+    
+    if (storedFirmName && storedFirmId && !firmData) {
+      // If we have firm data in localStorage but not in state, try to fetch it
+      fetchFirmData(storedFirmId);
+    }
+  }, []);
+
+  const fetchFirmData = async (firmId) => {
+    try {
+      const loginToken = localStorage.getItem('loginToken');
+      const firmResponse = await fetch(`${API_URL}/firm/single-firm/${firmId}`, {
+        headers: {
+          'Authorization': `Bearer ${loginToken}`
+        }
+      });
+      
+      if (firmResponse.ok) {
+        const firmResult = await firmResponse.json();
+        console.log("Firm data fetched from localStorage fallback:", firmResult);
+        setFirmData(firmResult.firm);
+      }
+    } catch (error) {
+      console.error("Error fetching firm data from localStorage:", error);
+    }
+  };
+
   const fetchUserDetails = async () => {
     try {
       setLoading(true);
@@ -32,10 +62,12 @@ const UserDetails = () => {
 
       if (vendorResponse.ok) {
         const vendorResult = await vendorResponse.json();
+        console.log("Vendor data received:", vendorResult);
         setVendorData(vendorResult.vendor);
         
         // If vendor has firm data, fetch firm details
         if (vendorResult.vendorFirmId) {
+          console.log("Fetching firm data for ID:", vendorResult.vendorFirmId);
           const firmResponse = await fetch(`${API_URL}/firm/single-firm/${vendorResult.vendorFirmId}`, {
             headers: {
               'Authorization': `Bearer ${loginToken}`
@@ -44,10 +76,16 @@ const UserDetails = () => {
           
           if (firmResponse.ok) {
             const firmResult = await firmResponse.json();
+            console.log("Firm data received:", firmResult);
             setFirmData(firmResult.firm);
+          } else {
+            console.error("Failed to fetch firm data:", firmResponse.status);
           }
+        } else {
+          console.log("No firm ID found for vendor");
         }
       } else {
+        console.error("Failed to fetch vendor details:", vendorResponse.status);
         setError('Failed to fetch user details');
       }
     } catch (error) {
