@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-const NavBar = ({showLoginHandler,showRegisterHandler,showLogOut,logOutHandler}) => {
-  const firmName = localStorage.getItem('firmName',)
+const NavBar = ({showLoginHandler,showRegisterHandler,showLogOut,logOutHandler,firmName}) => {
+
   return (
     <div className="navSection">
 
@@ -9,8 +9,7 @@ const NavBar = ({showLoginHandler,showRegisterHandler,showLogOut,logOutHandler})
             vendor Dashboard
         </div>
         <div className='firmName'>
-          <h4>FirmName:{firmName}</h4>
-
+          {firmName && <h4>Firm Name: {firmName}</h4>}
         </div>
         <div className="userAuth">
           {!showLogOut ?

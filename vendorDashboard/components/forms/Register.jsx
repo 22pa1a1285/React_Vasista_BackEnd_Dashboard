@@ -10,6 +10,18 @@ export const Register = ({showLoginHandler}) => {
 
     const handleSubmit = async(e)=>{
         e.preventDefault();
+        
+        // Basic validation
+        if(!username || !email || !password){
+            alert("Please fill in all fields");
+            return;
+        }
+        
+        if(password.length < 6){
+            alert("Password must be at least 6 characters long");
+            return;
+        }
+        
         try {
             const responce = await fetch(`${API_URL}/vendor/register`,{
                 method:'POST',
@@ -25,13 +37,15 @@ export const Register = ({showLoginHandler}) => {
                 setUsername("");
                 setEmail("");
                 setPassword("");
-                alert("vendor registered successfully");
-                showLoginHandler()
+                alert("Vendor registered successfully");
+                showLoginHandler();
+            } else {
+                alert(data.message || "Registration failed");
             }
 
         } catch (error) {
             console.error("registration failed",error);
-            alert("Registration failed")
+            alert("Registration failed: " + error.message);
         }
     }
   return (

@@ -8,6 +8,161 @@ body{
   box-sizing: border-box;
 
 }
+
+/* User Details Styles */
+.userDetailsSection {
+  width: 100%;
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 80vh;
+}
+
+.userDetailsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.userDetailsContainer h2 {
+  color: #2E294E;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.detailsCard {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #f46036;
+}
+
+.detailsCard h3 {
+  color: #2E294E;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #f46036;
+  padding-bottom: 10px;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border-left: 3px solid #2E294E;
+}
+
+.detailItem label {
+  font-weight: bold;
+  color: #2E294E;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detailItem span {
+  color: #333;
+  font-size: 1rem;
+  word-break: break-word;
+}
+
+.imageContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.imageContainer label {
+  display: block;
+  font-weight: bold;
+  color: #2E294E;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.firmImage {
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+}
+
+.noFirmMessage {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-style: italic;
+}
+
+.noFirmMessage p {
+  margin: 10px 0;
+  font-size: 1.1rem;
+}
+
+.loadingContainer, .errorContainer {
+  text-align: center;
+  padding: 50px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.loadingContainer h3, .errorContainer h3 {
+  color: #2E294E;
+  margin-bottom: 20px;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.refreshButton, .retryButton {
+  background-color: #f46036;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.refreshButton:hover, .retryButton:hover {
+  background-color: #e55a2b;
+}
+
+@media (max-width: 768px) {
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .userDetailsContainer h2 {
+    font-size: 1.5rem;
+  }
+  
+  .detailsCard {
+    padding: 15px;
+  }
+  
+  .firmImage {
+    max-width: 100%;
+  }
+}
 .navSection{
   
   height: 80px;

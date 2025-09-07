@@ -1,7 +1,7 @@
 import React,{use, useState} from 'react'
 import { API_URL } from '../../data/ApiPath';
 
-export const AddFirm = () => {
+export const AddFirm = ({onFirmAdded}) => {
     const [firmName,setFirmName] = useState("")
     const [area,setArea] = useState("");
     const [category,setCategory] = useState([]);
@@ -33,10 +33,33 @@ export const AddFirm = () => {
 
     const handleFirmSubmit = async(e)=>{
         e.preventDefault();
+        
+        // Basic validation
+        if(!firmName || !area || !offer){
+            alert("Please fill in all required fields");
+            return;
+        }
+        
+        if(category.length === 0){
+            alert("Please select at least one category");
+            return;
+        }
+        
+        if(region.length === 0){
+            alert("Please select at least one region");
+            return;
+        }
+        
+        if(!file){
+            alert("Please select a firm image");
+            return;
+        }
+        
         try {
             const loginToken = localStorage.getItem('loginToken');
             if(!loginToken){
-                console.error("user not authenticated")
+                alert("Please login first");
+                return;
             }
             const formData = new FormData();
              formData.append('firmName',firmName);
@@ -70,6 +93,14 @@ export const AddFirm = () => {
                 console.log("this is firm id", data.firmId);
                 const mango = data.firmId;
                 localStorage.setItem('firmId', mango);
+                
+                // Store firm name in localStorage
+                localStorage.setItem('firmName', firmName);
+                
+                // Call the callback to update parent state
+                if (onFirmAdded) {
+                  onFirmAdded();
+                }
             } else if (data.message === "vendor can have only one firm") {
                 alert("Firm exists, only 1 firm can be added");
             } else {
